@@ -54,3 +54,8 @@ python stock_monitor_optimized.py
 等待构建完成
 
 在 dist 文件夹找到 Stock Monitor.exe
+
+## 鸣谢
+
+根据以下原代码修改优化，特此致谢！
+https://github.com/bigbig121/stock_monitor
