@@ -13,7 +13,7 @@ import random
 from concurrent.futures import ThreadPoolExecutor
 
 # ================= 常量配置 =================
-VERSION = "1.2.1-infinite-alert-fixed"
+VERSION = "1.0.0"
 CONFIG_FILE = "stock_config.json"
 WINDOW_STATE_FILE = "window_state.json"
 
@@ -23,8 +23,8 @@ WINDOW_WIDTH = 220
 WINDOW_HEIGHT_PER_ITEM = 40
 
 FONT_CONFIG = ("Microsoft YaHei UI", 10, "bold")
-COLOR_UP = "#FF4D4F"
-COLOR_DOWN = "#52C41A"
+COLOR_UP = "#52C41A"   # 绿色
+COLOR_DOWN = "#FF4D4F" # 红色
 COLOR_NEUTRAL = "#cccccc"
 
 # 默认监控列表
@@ -38,24 +38,30 @@ DEFAULT_ITEMS =[
 # ================= 全局状态 =================
 ITEMS =[]
 items_lock = threading.Lock()
-last_alert_status = {}  # 智能报警状态机
+last_alert_status = {}  
 
 root = None
 main_frame = None
 row_widgets_list =[]
 last_ui_hash = ""
 
-# 无限抖动状态机
 is_shaking = False
 shake_anchor = None
 
-# ================= 网络层提速 =================
+# ================= 网络层提速 (防缓存优化) =================
 GLOBAL_SESSION = requests.Session()
 _retry = Retry(total=1, backoff_factor=0.1, status_forcelist=[500, 502, 503, 504])
 _adapter = HTTPAdapter(max_retries=_retry, pool_connections=20, pool_maxsize=20)
 GLOBAL_SESSION.mount('http://', _adapter)
 GLOBAL_SESSION.mount('https://', _adapter)
-GLOBAL_SESSION.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
+
+# 安全防缓存方案
+GLOBAL_SESSION.headers.update({
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0'
+})
 
 def safe_float(value, default=0.0):
     if value == "" or value is None: return default
@@ -92,7 +98,7 @@ def fetch_all_data_concurrent(stocks, cryptos):
 
     def _fetch_tencent():
         if not tencent_codes: return {}
-        resp = get_with_retry(f"http://qt.gtimg.cn/q={','.join(tencent_codes)}")
+        resp = get_with_retry(f"http://qt.gtimg.cn/q={','.join(tencent_codes)}", timeout=2.5)
         local_res = {}
         if resp:
             for line in resp.content.decode('gbk', errors='ignore').split(';'):
@@ -107,7 +113,7 @@ def fetch_all_data_concurrent(stocks, cryptos):
 
     def _fetch_sina():
         if not sina_codes: return {}
-        resp = get_with_retry(f"http://hq.sinajs.cn/list={','.join(sina_codes)}", headers={'Referer': 'http://finance.sina.com.cn'})
+        resp = get_with_retry(f"http://hq.sinajs.cn/list={','.join(sina_codes)}", headers={'Referer': 'http://finance.sina.com.cn'}, timeout=2.5)
         local_res = {}
         if resp:
             for line in resp.content.decode('gbk', errors='ignore').split(';'):
@@ -142,23 +148,36 @@ def fetch_all_data_concurrent(stocks, cryptos):
 
     def _fetch_crypto(item):
         code = item.get("code", "").upper()
-        if 'USDT' in code:
-            resp = get_with_retry(f"https://api.binance.com/api/v3/ticker/24hr?symbol={code}", timeout=3)
-            if resp:
-                try:
-                    data = resp.json()
+        symbol = code if 'USDT' in code else f"{code}USDT"
+        
+        resp = get_with_retry(f"https://api.binance.com/api/v3/ticker/24hr?symbol={symbol}", timeout=1.5)
+        if resp:
+            try:
+                data = resp.json()
+                if 'lastPrice' in data:
                     return code, (safe_float(data.get('lastPrice')), safe_float(data.get('priceChangePercent')))
-                except: pass
-        else:
-            symbol_map = {'BTC': 'bitcoin', 'ETH': 'ethereum', 'SOL': 'solana', 'DOGE': 'dogecoin', 'BNB': 'binancecoin', 'XRP': 'ripple', 'ADA': 'cardano'}
-            gecko_id = symbol_map.get(code, code.lower())
-            resp = get_with_retry(f"https://api.coingecko.com/api/v3/simple/price?ids={gecko_id}&vs_currencies=usd&include_24hr_change=true", timeout=3)
-            if resp:
-                try:
-                    data = resp.json()
-                    if gecko_id in data:
-                        return code, (safe_float(data[gecko_id].get('usd')), safe_float(data[gecko_id].get('usd_24h_change')))
-                except: pass
+            except: pass
+            
+        gate_symbol = f"{code}_USDT" if "USDT" not in code else code.replace("USDT", "_USDT")
+        resp = get_with_retry(f"https://api.gateio.ws/api/v4/spot/tickers?currency_pair={gate_symbol}", timeout=2.0)
+        if resp:
+            try:
+                data = resp.json()[0]
+                if 'last' in data:
+                    return code, (safe_float(data.get('last')), safe_float(data.get('change_percentage')))
+            except: pass
+            
+        symbol_map = {'BTC': 'bitcoin', 'ETH': 'ethereum', 'SOL': 'solana', 'DOGE': 'dogecoin', 'BNB': 'binancecoin', 'XRP': 'ripple', 'ADA': 'cardano'}
+        base_code = code.replace('USDT', '') if 'USDT' in code else code
+        gecko_id = symbol_map.get(base_code, base_code.lower())
+        resp = get_with_retry(f"https://api.coingecko.com/api/v3/simple/price?ids={gecko_id}&vs_currencies=usd&include_24hr_change=true", timeout=2.0)
+        if resp:
+            try:
+                data = resp.json()
+                if gecko_id in data:
+                    return code, (safe_float(data[gecko_id].get('usd')), safe_float(data[gecko_id].get('usd_24h_change')))
+            except: pass
+            
         return None, None
 
     with ThreadPoolExecutor(max_workers=8) as executor:
@@ -206,7 +225,6 @@ def save_window_state():
 
 # ================= 报警抖动引擎 (无限模式) =================
 def stop_shake():
-    """鼠标点击调用的：一键恢复平静并重置坐标"""
     global is_shaking, shake_anchor
     if is_shaking:
         is_shaking = False
@@ -217,7 +235,6 @@ def stop_shake():
             shake_anchor = None
 
 def start_continuous_shake():
-    """开启无限报警循环"""
     global is_shaking, shake_anchor
     if is_shaking: return
     is_shaking = True
@@ -225,7 +242,6 @@ def start_continuous_shake():
     shake_loop()
 
 def shake_loop():
-    """异步疯抖死循环"""
     global is_shaking, shake_anchor
     if not is_shaking or not root or not root.winfo_exists():
         return
@@ -239,7 +255,7 @@ def shake_loop():
 
 # ================= UI 渲染与事件 =================
 def on_mouse_down(e):
-    stop_shake() # 点击即停止抖动并恢复原位
+    stop_shake()
     root.start_x = e.x
     root.start_y = e.y
 
@@ -303,24 +319,15 @@ def refresh_labels(data_map):
             curr, pct = data_map[code]
             color = COLOR_UP if pct > 0 else (COLOR_DOWN if pct < 0 else COLOR_NEUTRAL)
             
-            # --- 智能双向预警逻辑 (Auto-Direction Alert) ---
             alert_price = safe_float(item.get('alert_price', 0.0))
-            
-            # 价格必须有效(>0)时才进行判断，防止初始化网络异常导致误报
             if alert_price > 0 and curr > 0:
                 state = last_alert_status.get(code, {})
                 
-                # 1. 如果发现了新的预警设定，动态识别用户意图
                 if state.get("target_price") != alert_price:
                     direction = 'high' if alert_price > curr else 'low'
-                    state = {
-                        "target_price": alert_price,
-                        "direction": direction,
-                        "fired": False
-                    }
+                    state = {"target_price": alert_price, "direction": direction, "fired": False}
                     last_alert_status[code] = state
                 
-                # 2. 判断是否触发
                 if not state["fired"]:
                     if state["direction"] == 'high' and curr >= alert_price:
                         should_shake = True
@@ -329,7 +336,6 @@ def refresh_labels(data_map):
                         should_shake = True
                         state["fired"] = True
                 else:
-                    # 3. 已经触发且你已停止了它，若价格反弹回安全区，则自动重新武装(Re-arm)
                     if state["direction"] == 'high' and curr < alert_price:
                         state["fired"] = False
                     elif state["direction"] == 'low' and curr > alert_price:
@@ -348,11 +354,9 @@ def refresh_labels(data_map):
 
     main_frame.update_idletasks()
     
-    # 仅当不在抖动状态时，才去刷新真实窗口大小
     if not is_shaking:
         root.geometry(f"{main_frame.winfo_reqwidth()}x{main_frame.winfo_reqheight()}+{root.winfo_x()}+{root.winfo_y()}")
 
-    # 触发报警抖动
     if should_shake:
         start_continuous_shake()
 
@@ -367,7 +371,7 @@ def update_ui_loop():
         if root and root.winfo_exists():
             root.after(0, lambda d=data: refresh_labels(d))
             
-        time.sleep(1.0)
+        time.sleep(0.8)
 
 # ================= 交互菜单 =================
 def show_context_menu(e):
@@ -380,9 +384,10 @@ def show_context_menu(e):
 def open_settings():
     win = tk.Toplevel(root)
     win.title("资产及预警配置")
-    win.geometry("490x360")
+    # 增加窗口宽度以容纳中文字符按钮
+    win.geometry("560x440")
     
-    frame = tk.LabelFrame(win, text="监控列表 (提示: 点击列表可快速读取修改)", padx=10, pady=10)
+    frame = tk.LabelFrame(win, text="监控列表 (点击行快速编辑)", padx=10, pady=10)
     frame.pack(fill="both", expand=True, padx=10, pady=10)
     
     lb = tk.Listbox(frame, height=8)
@@ -412,31 +417,42 @@ def open_settings():
             with items_lock: ITEMS.pop(sel[0])
             save_config(); refresh_list(); refresh_labels({})
 
+    # 按钮由符号改为中文，宽度适度增加到 width=6
     btn_frame = tk.Frame(frame)
     btn_frame.pack(side="right", fill="y", padx=5)
-    tk.Button(btn_frame, text="↑ 上移", command=lambda: move(-1)).pack(pady=2)
-    tk.Button(btn_frame, text="↓ 下移", command=lambda: move(1)).pack(pady=2)
-    tk.Button(btn_frame, text="× 删除", fg="red", command=delete_item).pack(pady=10)
+    tk.Button(btn_frame, text="向上", command=lambda: move(-1), width=6).pack(pady=(0, 5))
+    tk.Button(btn_frame, text="向下", command=lambda: move(1), width=6).pack(pady=5)
+    tk.Button(btn_frame, text="删除", fg="red", command=delete_item, width=6).pack(pady=(15, 0))
     
+    # ================= 底部录入区重构：绝对居中排版 =================
     add_f = tk.Frame(win)
-    add_f.pack(fill="x", padx=10, pady=5)
+    add_f.pack(fill="x", padx=10, pady=(0, 10))
     
-    tk.Label(add_f, text="代码:").grid(row=0, column=0, pady=2, sticky="e")
-    e_code = tk.Entry(add_f, width=12)
-    e_code.grid(row=0, column=1, padx=5, pady=2)
+    # 1. 使用子 Frame 将输入框同行紧凑包裹，并强制居中
+    form_frame = tk.Frame(add_f)
+    form_frame.pack(anchor="center", pady=5)
     
-    tk.Label(add_f, text="名称:").grid(row=0, column=2, pady=2, sticky="e")
-    e_name = tk.Entry(add_f, width=12)
-    e_name.grid(row=0, column=3, padx=5, pady=2)
+    tk.Label(form_frame, text="代码:").grid(row=0, column=0, pady=5, sticky="e")
+    e_code = tk.Entry(form_frame, width=11)
+    e_code.grid(row=0, column=1, padx=(2, 15), pady=5)
     
-    tk.Label(add_f, text="预警价:").grid(row=1, column=0, pady=2, sticky="e")
-    e_alert = tk.Entry(add_f, width=12)
-    e_alert.grid(row=1, column=1, padx=5, pady=2)
+    tk.Label(form_frame, text="名称:").grid(row=0, column=2, pady=5, sticky="e")
+    e_name = tk.Entry(form_frame, width=11)
+    e_name.grid(row=0, column=3, padx=(2, 15), pady=5)
+    
+    tk.Label(form_frame, text="预警价:").grid(row=0, column=4, pady=5, sticky="e")
+    e_alert = tk.Entry(form_frame, width=11)
+    e_alert.grid(row=0, column=5, padx=(2, 0), pady=5)
+    
+    # 2. 单选按钮独立一行，并强制居中
+    type_frame = tk.Frame(add_f)
+    type_frame.pack(anchor="center", pady=2)
     
     t_var = tk.StringVar(value="stock")
-    tk.Radiobutton(add_f, text="股票/外汇", var=t_var, value="stock").grid(row=1, column=2, padx=5)
-    tk.Radiobutton(add_f, text="数字货币", var=t_var, value="crypto").grid(row=1, column=3, padx=5)
+    tk.Radiobutton(type_frame, text="股票/外汇", var=t_var, value="stock").pack(side="left", padx=10)
+    tk.Radiobutton(type_frame, text="数字货币", var=t_var, value="crypto").pack(side="left", padx=10)
     
+    # 列表数据回填
     def on_list_select(event):
         sel = lb.curselection()
         if sel:
@@ -469,7 +485,8 @@ def open_settings():
             e_name.delete(0, tk.END)
             e_alert.delete(0, tk.END)
             
-    tk.Button(add_f, text="添加 / 修改", command=do_add, bg="#4CAF50", fg="white").grid(row=0, column=4, rowspan=2, padx=10, sticky="ns")
+    # 3. 添加按钮跨越底部独立成行，并绝对居中
+    tk.Button(add_f, text="添加 / 修改", command=do_add, bg="#4CAF50", fg="white", font=("Microsoft YaHei", 10, "bold"), width=20, pady=2).pack(anchor="center", pady=(10, 10))
 
 def quit_app():
     save_window_state(); save_config()
