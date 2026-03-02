@@ -1,0 +1,189 @@
+2026-03-02 12:35:08,909 - stock_monitor - INFO - Starting Stock Monitor v0.5.0-optimized
+2026-03-02 12:35:08,909 - stock_monitor - INFO - Config file not found, using defaults
+2026-03-02 12:35:09,374 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:35:09,420 - stock_monitor - INFO - Starting update UI loop
+2026-03-02 12:35:09,420 - stock_monitor - INFO - Starting MA5 volume fetch thread
+2026-03-02 12:35:09,420 - stock_monitor - INFO - Application started successfully
+2026-03-02 12:35:09,625 - stock_monitor - DEBUG - get_stock_data_tencent took 0.104s
+2026-03-02 12:35:09,709 - stock_monitor - DEBUG - MA5 for sh000681: 43233882
+2026-03-02 12:35:09,890 - stock_monitor - DEBUG - MA5 for sh000832: 3681221
+2026-03-02 12:35:10,142 - stock_monitor - DEBUG - MA5 for sh518880: 6060153
+2026-03-02 12:35:10,142 - stock_monitor - INFO - MA5 volume fetch completed
+2026-03-02 12:35:10,143 - stock_monitor - DEBUG - get_ma5_volumes_thread took 0.723s
+2026-03-02 12:35:11,040 - stock_monitor - DEBUG - refresh_labels took 0.315s
+2026-03-02 12:35:11,848 - stock_monitor - DEBUG - get_stock_data_tencent took 0.110s
+2026-03-02 12:35:15,159 - stock_monitor - DEBUG - get_stock_data_tencent took 0.102s
+2026-03-02 12:35:26,227 - stock_monitor - INFO - Starting Stock Monitor v0.5.0-optimized
+2026-03-02 12:35:26,227 - stock_monitor - INFO - Config file not found, using defaults
+2026-03-02 12:35:26,292 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:35:26,336 - stock_monitor - INFO - Starting update UI loop
+2026-03-02 12:35:26,336 - stock_monitor - INFO - Starting MA5 volume fetch thread
+2026-03-02 12:35:26,337 - stock_monitor - INFO - Application started successfully
+2026-03-02 12:35:26,512 - stock_monitor - DEBUG - MA5 for sh000681: 43233882
+2026-03-02 12:35:26,545 - stock_monitor - DEBUG - get_stock_data_tencent took 0.106s
+2026-03-02 12:35:26,686 - stock_monitor - DEBUG - MA5 for sh000832: 3681221
+2026-03-02 12:35:26,849 - stock_monitor - DEBUG - refresh_labels took 0.304s
+2026-03-02 12:35:26,857 - stock_monitor - DEBUG - MA5 for sh518880: 6060153
+2026-03-02 12:35:26,857 - stock_monitor - INFO - MA5 volume fetch completed
+2026-03-02 12:35:26,859 - stock_monitor - DEBUG - get_ma5_volumes_thread took 0.522s
+2026-03-02 12:35:32,385 - stock_monitor - DEBUG - get_stock_data_tencent took 0.431s
+2026-03-02 12:35:33,494 - stock_monitor - DEBUG - get_stock_data_tencent took 0.107s
+2026-03-02 12:35:34,608 - stock_monitor - DEBUG - get_stock_data_tencent took 0.102s
+2026-03-02 12:35:41,222 - stock_monitor - DEBUG - get_stock_data_tencent took 0.102s
+2026-03-02 12:35:45,640 - stock_monitor - DEBUG - get_stock_data_tencent took 0.101s
+2026-03-02 12:35:46,757 - stock_monitor - DEBUG - get_stock_data_tencent took 0.104s
+2026-03-02 12:35:47,872 - stock_monitor - DEBUG - get_stock_data_tencent took 0.104s
+2026-03-02 12:35:48,988 - stock_monitor - DEBUG - get_stock_data_tencent took 0.108s
+2026-03-02 12:35:51,196 - stock_monitor - DEBUG - get_stock_data_tencent took 0.109s
+2026-03-02 12:35:52,313 - stock_monitor - DEBUG - get_stock_data_tencent took 0.111s
+2026-03-02 12:36:00,024 - stock_monitor - DEBUG - get_stock_data_tencent took 0.103s
+2026-03-02 12:36:01,138 - stock_monitor - DEBUG - get_stock_data_tencent took 0.101s
+2026-03-02 12:36:02,262 - stock_monitor - DEBUG - get_stock_data_tencent took 0.107s
+2026-03-02 12:36:05,576 - stock_monitor - DEBUG - get_stock_data_tencent took 0.106s
+2026-03-02 12:36:06,692 - stock_monitor - DEBUG - get_stock_data_tencent took 0.105s
+2026-03-02 12:36:08,903 - stock_monitor - DEBUG - get_stock_data_tencent took 0.100s
+2026-03-02 12:36:11,129 - stock_monitor - DEBUG - get_stock_data_tencent took 0.124s
+2026-03-02 12:36:13,338 - stock_monitor - DEBUG - get_stock_data_tencent took 0.101s
+2026-03-02 12:36:15,561 - stock_monitor - DEBUG - get_stock_data_tencent took 0.109s
+2026-03-02 12:36:17,776 - stock_monitor - DEBUG - get_stock_data_tencent took 0.107s
+2026-03-02 12:36:20,042 - stock_monitor - DEBUG - Config saved successfully
+2026-03-02 12:36:22,194 - stock_monitor - DEBUG - get_stock_data_tencent took 0.108s
+2026-03-02 12:36:22,490 - stock_monitor - DEBUG - Config saved successfully
+2026-03-02 12:36:23,316 - stock_monitor - DEBUG - get_stock_data_tencent took 0.114s
+2026-03-02 12:36:24,426 - stock_monitor - DEBUG - get_stock_data_tencent took 0.107s
+2026-03-02 12:36:25,077 - stock_monitor - DEBUG - Config saved successfully
+2026-03-02 12:36:27,719 - stock_monitor - DEBUG - get_stock_data_tencent took 0.101s
+2026-03-02 12:36:28,823 - stock_monitor - DEBUG - get_stock_data_tencent took 0.103s
+2026-03-02 12:36:29,937 - stock_monitor - DEBUG - get_stock_data_tencent took 0.101s
+2026-03-02 12:36:31,059 - stock_monitor - DEBUG - get_stock_data_tencent took 0.108s
+2026-03-02 12:36:32,176 - stock_monitor - DEBUG - get_stock_data_tencent took 0.108s
+2026-03-02 12:36:33,290 - stock_monitor - DEBUG - get_stock_data_tencent took 0.105s
+2026-03-02 12:36:35,505 - stock_monitor - DEBUG - get_stock_data_tencent took 0.108s
+2026-03-02 12:36:37,715 - stock_monitor - DEBUG - get_stock_data_tencent took 0.112s
+2026-03-02 12:36:39,920 - stock_monitor - DEBUG - get_stock_data_tencent took 0.100s
+2026-03-02 12:42:19,393 - stock_monitor - INFO - Starting Stock Monitor v0.6.0-crypto
+2026-03-02 12:42:19,395 - stock_monitor - INFO - Loaded 3 stocks and 1 cryptos from config
+2026-03-02 12:42:19,460 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:42:19,511 - stock_monitor - INFO - Starting update UI loop
+2026-03-02 12:42:19,511 - stock_monitor - INFO - Application started successfully
+2026-03-02 12:42:19,732 - stock_monitor - DEBUG - get_stock_data_tencent took 0.112s
+2026-03-02 12:42:20,270 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.538s
+2026-03-02 12:42:20,270 - stock_monitor - DEBUG - get_crypto_data took 0.538s
+2026-03-02 12:42:20,270 - stock_monitor - DEBUG - Got crypto data for BTC: 459373.0 CNY (-0.63%)
+2026-03-02 12:42:20,271 - stock_monitor - DEBUG - get_crypto_data took 0.539s
+2026-03-02 12:42:21,377 - stock_monitor - DEBUG - get_stock_data_tencent took 0.106s
+2026-03-02 12:42:21,810 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.433s
+2026-03-02 12:42:21,810 - stock_monitor - DEBUG - get_crypto_data took 0.433s
+2026-03-02 12:42:21,810 - stock_monitor - DEBUG - Got crypto data for BTC: 459373.0 CNY (-0.63%)
+2026-03-02 12:42:21,810 - stock_monitor - DEBUG - get_crypto_data took 0.433s
+2026-03-02 12:42:22,932 - stock_monitor - DEBUG - get_stock_data_tencent took 0.111s
+2026-03-02 12:42:23,377 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.445s
+2026-03-02 12:42:23,378 - stock_monitor - DEBUG - get_crypto_data took 0.446s
+2026-03-02 12:42:23,378 - stock_monitor - DEBUG - Got crypto data for BTC: 459373.0 CNY (-0.63%)
+2026-03-02 12:42:23,378 - stock_monitor - DEBUG - get_crypto_data took 0.446s
+2026-03-02 12:43:26,105 - stock_monitor - DEBUG - Config saved successfully
+2026-03-02 12:43:26,120 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:43:26,408 - stock_monitor - DEBUG - get_coinmarketcap_price took 61.928s
+2026-03-02 12:43:26,408 - stock_monitor - DEBUG - get_crypto_data took 61.928s
+2026-03-02 12:43:26,408 - stock_monitor - DEBUG - Got crypto data for BTC: 459244.0 CNY (-0.66%)
+2026-03-02 12:43:26,408 - stock_monitor - DEBUG - get_crypto_data took 61.928s
+2026-03-02 12:43:27,545 - stock_monitor - DEBUG - get_stock_data_tencent took 0.127s
+2026-03-02 12:43:27,990 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.444s
+2026-03-02 12:43:27,990 - stock_monitor - DEBUG - get_crypto_data took 0.444s
+2026-03-02 12:43:27,990 - stock_monitor - DEBUG - Got crypto data for BTC: 459244.0 CNY (-0.66%)
+2026-03-02 12:43:27,990 - stock_monitor - DEBUG - get_crypto_data took 0.444s
+2026-03-02 12:43:28,520 - stock_monitor - DEBUG - Config saved successfully
+2026-03-02 12:43:28,520 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:43:29,108 - stock_monitor - DEBUG - get_stock_data_tencent took 0.106s
+2026-03-02 12:43:32,706 - stock_monitor - DEBUG - Config saved successfully
+2026-03-02 12:43:32,718 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:43:35,619 - stock_monitor - DEBUG - Config saved successfully
+2026-03-02 12:43:35,635 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:43:38,254 - stock_monitor - DEBUG - Config saved successfully
+2026-03-02 12:43:38,269 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:44:03,585 - stock_monitor - INFO - Starting Stock Monitor v0.6.0-crypto
+2026-03-02 12:44:03,585 - stock_monitor - INFO - Loaded 3 stocks and 1 cryptos from config
+2026-03-02 12:44:03,635 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:44:03,668 - stock_monitor - INFO - Starting update UI loop
+2026-03-02 12:44:03,668 - stock_monitor - INFO - Application started successfully
+2026-03-02 12:44:03,906 - stock_monitor - DEBUG - get_stock_data_tencent took 0.121s
+2026-03-02 12:44:09,651 - stock_monitor - DEBUG - Config saved successfully
+2026-03-02 12:44:09,667 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:44:13,734 - stock_monitor - DEBUG - Config saved successfully
+2026-03-02 12:44:13,734 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:44:19,474 - stock_monitor - INFO - Starting Stock Monitor v0.6.0-crypto
+2026-03-02 12:44:19,476 - stock_monitor - INFO - Loaded 3 stocks and 1 cryptos from config
+2026-03-02 12:44:19,517 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:44:19,551 - stock_monitor - INFO - Starting update UI loop
+2026-03-02 12:44:19,551 - stock_monitor - INFO - Application started successfully
+2026-03-02 12:44:19,777 - stock_monitor - DEBUG - get_stock_data_tencent took 0.111s
+2026-03-02 12:44:30,706 - stock_monitor - DEBUG - get_coinmarketcap_price took 10.929s
+2026-03-02 12:44:30,706 - stock_monitor - DEBUG - get_crypto_data took 10.929s
+2026-03-02 12:44:30,706 - stock_monitor - DEBUG - Got crypto data for BTC: 459000.0 CNY (-0.71%)
+2026-03-02 12:44:30,706 - stock_monitor - DEBUG - get_crypto_data took 10.929s
+2026-03-02 12:44:32,259 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.448s
+2026-03-02 12:44:32,259 - stock_monitor - DEBUG - get_crypto_data took 0.448s
+2026-03-02 12:44:32,259 - stock_monitor - DEBUG - Got crypto data for BTC: 459000.0 CNY (-0.71%)
+2026-03-02 12:44:32,259 - stock_monitor - DEBUG - get_crypto_data took 0.448s
+2026-03-02 12:44:33,808 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.444s
+2026-03-02 12:44:33,808 - stock_monitor - DEBUG - get_crypto_data took 0.444s
+2026-03-02 12:44:33,808 - stock_monitor - DEBUG - Got crypto data for BTC: 459000.0 CNY (-0.71%)
+2026-03-02 12:44:33,808 - stock_monitor - DEBUG - get_crypto_data took 0.444s
+2026-03-02 12:44:34,926 - stock_monitor - DEBUG - get_stock_data_tencent took 0.109s
+2026-03-02 12:45:04,899 - stock_monitor - DEBUG - Config saved successfully
+2026-03-02 12:45:04,914 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 12:45:36,846 - stock_monitor - DEBUG - get_coinmarketcap_price took 61.920s
+2026-03-02 12:45:36,846 - stock_monitor - DEBUG - get_crypto_data took 61.920s
+2026-03-02 12:45:36,846 - stock_monitor - DEBUG - Got crypto data for BTC: 459069.0 CNY (-0.67%)
+2026-03-02 12:45:36,846 - stock_monitor - DEBUG - get_crypto_data took 61.920s
+2026-03-02 12:45:37,971 - stock_monitor - DEBUG - get_stock_data_tencent took 0.110s
+2026-03-02 12:45:38,416 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.445s
+2026-03-02 12:45:38,416 - stock_monitor - DEBUG - get_crypto_data took 0.445s
+2026-03-02 12:45:38,416 - stock_monitor - DEBUG - Got crypto data for BTC: 459069.0 CNY (-0.67%)
+2026-03-02 12:45:38,417 - stock_monitor - DEBUG - get_crypto_data took 0.446s
+2026-03-02 12:45:39,954 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.437s
+2026-03-02 12:45:39,954 - stock_monitor - DEBUG - get_crypto_data took 0.437s
+2026-03-02 12:45:39,954 - stock_monitor - DEBUG - Got crypto data for BTC: 459069.0 CNY (-0.67%)
+2026-03-02 12:45:39,954 - stock_monitor - DEBUG - get_crypto_data took 0.437s
+2026-03-02 12:45:41,062 - stock_monitor - DEBUG - get_stock_data_tencent took 0.101s
+2026-03-02 12:46:42,978 - stock_monitor - DEBUG - get_coinmarketcap_price took 61.915s
+2026-03-02 12:46:42,978 - stock_monitor - DEBUG - get_crypto_data took 61.915s
+2026-03-02 12:46:42,978 - stock_monitor - DEBUG - Got crypto data for BTC: 458875.0 CNY (-0.71%)
+2026-03-02 12:46:42,978 - stock_monitor - DEBUG - get_crypto_data took 61.915s
+2026-03-02 12:46:44,101 - stock_monitor - DEBUG - get_stock_data_tencent took 0.120s
+2026-03-02 12:46:44,542 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.442s
+2026-03-02 12:46:44,543 - stock_monitor - DEBUG - get_crypto_data took 0.442s
+2026-03-02 12:46:44,543 - stock_monitor - DEBUG - Got crypto data for BTC: 458875.0 CNY (-0.71%)
+2026-03-02 12:46:44,543 - stock_monitor - DEBUG - get_crypto_data took 0.443s
+2026-03-02 12:46:46,100 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.443s
+2026-03-02 12:46:46,100 - stock_monitor - DEBUG - get_crypto_data took 0.443s
+2026-03-02 12:46:46,100 - stock_monitor - DEBUG - Got crypto data for BTC: 458875.0 CNY (-0.71%)
+2026-03-02 12:46:46,101 - stock_monitor - DEBUG - get_crypto_data took 0.444s
+2026-03-02 12:47:47,929 - stock_monitor - DEBUG - get_coinmarketcap_price took 60.724s
+2026-03-02 12:47:47,929 - stock_monitor - DEBUG - get_crypto_data took 60.724s
+2026-03-02 12:47:47,929 - stock_monitor - DEBUG - Got crypto data for BTC: 458534.0 CNY (-0.78%)
+2026-03-02 12:47:47,930 - stock_monitor - DEBUG - get_crypto_data took 60.725s
+2026-03-02 12:47:49,045 - stock_monitor - DEBUG - get_stock_data_tencent took 0.112s
+2026-03-02 12:47:49,475 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.431s
+2026-03-02 12:47:49,475 - stock_monitor - DEBUG - get_crypto_data took 0.431s
+2026-03-02 12:47:49,475 - stock_monitor - DEBUG - Got crypto data for BTC: 458534.0 CNY (-0.78%)
+2026-03-02 12:47:49,476 - stock_monitor - DEBUG - get_crypto_data took 0.432s
+2026-03-02 12:47:51,019 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.442s
+2026-03-02 12:47:51,020 - stock_monitor - DEBUG - get_crypto_data took 0.443s
+2026-03-02 12:47:51,020 - stock_monitor - DEBUG - Got crypto data for BTC: 458534.0 CNY (-0.78%)
+2026-03-02 12:47:51,020 - stock_monitor - DEBUG - get_crypto_data took 0.443s
+2026-03-02 13:40:07,877 - stock_monitor - INFO - Starting Stock Monitor v0.6.0-crypto
+2026-03-02 13:40:07,878 - stock_monitor - INFO - Loaded 3 stocks and 1 cryptos from config
+2026-03-02 13:40:07,937 - stock_monitor - DEBUG - Rebuilding UI layout
+2026-03-02 13:40:07,973 - stock_monitor - INFO - Starting update UI loop
+2026-03-02 13:40:07,973 - stock_monitor - INFO - Application started successfully
+2026-03-02 13:40:08,197 - stock_monitor - DEBUG - get_stock_data_tencent took 0.110s
+2026-03-02 13:40:08,732 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.534s
+2026-03-02 13:40:08,732 - stock_monitor - DEBUG - get_crypto_data took 0.534s
+2026-03-02 13:40:08,732 - stock_monitor - DEBUG - Got crypto data for BTC: 458897.0 CNY (-0.91%)
+2026-03-02 13:40:08,733 - stock_monitor - DEBUG - get_crypto_data took 0.536s
+2026-03-02 13:40:09,841 - stock_monitor - DEBUG - get_stock_data_tencent took 0.102s
+2026-03-02 13:40:10,272 - stock_monitor - DEBUG - get_coinmarketcap_price took 0.431s
+2026-03-02 13:40:10,272 - stock_monitor - DEBUG - get_crypto_data took 0.431s
+2026-03-02 13:40:10,272 - stock_monitor - DEBUG - Got crypto data for BTC: 458897.0 CNY (-0.91%)
+2026-03-02 13:40:10,273 - stock_monitor - DEBUG - get_crypto_data took 0.432s

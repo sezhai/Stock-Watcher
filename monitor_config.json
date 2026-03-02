@@ -1,0 +1,33 @@
+{
+  "assets": [
+    {
+      "code": "sh000001",
+      "name": "上证指数",
+      "type": "stock"
+    },
+    {
+      "code": "us.IXIC",
+      "name": "纳斯达克",
+      "type": "stock"
+    },
+    {
+      "code": "hf_XAU",
+      "name": "国际金价",
+      "type": "stock"
+    },
+    {
+      "code": "BTCUSDT",
+      "name": "比特币",
+      "type": "crypto"
+    }
+  ],
+  "display_mode": "percent",
+  "show_price": true,
+  "enable_shake": true,
+  "session_max_map": {
+    "sh000001": 0.5993446844492231,
+    "us.IXIC": 0.9186402184070807,
+    "hf_XAU": 5279.95
+  },
+  "date": "2026-03-02"
+}
