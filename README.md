@@ -24,7 +24,7 @@
 
 1. **下载文件**
    - 将以下文件放在同一目录：
-     - `stock_monitor_optimized.py`
+     - `Stock Watcher.py`
      - `requirements.txt`
      - `install_and_run.bat`
 
@@ -42,7 +42,7 @@
 pip install -r requirements.txt
 
 # 运行程序
-python stock_monitor_optimized.py
+python Stock Watcher.py
 ```
 
 ### 方法 3：打包为 EXE（无需 Python）
@@ -53,9 +53,5 @@ python stock_monitor_optimized.py
 
 等待构建完成
 
-在 dist 文件夹找到 Stock Monitor.exe
+在 dist 文件夹找到 Stock Watcher.exe
 
-## 鸣谢
-
-根据以下原代码修改优化，特此致谢！
-https://github.com/bigbig121/stock_monitor
