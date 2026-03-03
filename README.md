@@ -1,7 +1,6 @@
 # Stock Watcher（盯盘助手）
 
 ## 📋 系统要求
-
 - Windows 7 及以上
 - Python 3.8+ （如果从源码运行）
 
@@ -15,38 +14,22 @@
 
 ## 🚀 使用方法
 
-### 方法 1：直接运行（推荐）
+### 方法1.直接运行（推荐）
+下载dist文件夹中Stock Watcher.exe文件直接运行
 
-1. **下载文件**
-   - 将以下文件放在同一目录：
-     - `Stock Watcher.py`
-     - `requirements.txt`
-     - `install_and_run.bat`
+### 方法2.源码运行
+**1.下载文件**
+将以下文件放在同一目录：
+- Stock Watcher.py
+- requirements.txt
+- install_and_run.bat
 
-2. **双击运行**
-   - 双击 `install_and_run.bat`
-   - 脚本会自动：
-     - 检查 Python 环境
-     - 安装所有依赖
-     - 启动应用
+**2.初次运行**
+双击 install_and_run.bat
+脚本会自动：
+- 检查 Python 环境
+- 安装所有依赖
+- 启动应用
 
-### 方法 2：手动运行
-
-```bash
-# 安装依赖
-pip install -r requirements.txt
-
-# 运行程序
-python Stock Watcher.py
-```
-
-### 方法 3：打包为 EXE（无需 Python）
-
-确保已安装 Python
-
-双击 build_exe.bat
-
-等待构建完成
-
-在 dist 文件夹找到 Stock Watcher.exe
-
+**3.后续运行**
+双击run.py即可
