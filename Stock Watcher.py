@@ -23,8 +23,8 @@ WINDOW_WIDTH = 220
 WINDOW_HEIGHT_PER_ITEM = 40
 
 FONT_CONFIG = ("Microsoft YaHei UI", 10, "bold")
-COLOR_UP = "#52C41A"   # 绿色
-COLOR_DOWN = "#FF4D4F" # 红色
+COLOR_UP = "#FF4D4F"   # 红色
+COLOR_DOWN = "#52C41A" # 绿色
 COLOR_NEUTRAL = "#cccccc"
 
 # 默认监控列表
