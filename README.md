@@ -15,7 +15,7 @@
 ## 🚀 使用方法
 
 ### 方法1.直接运行（推荐）
-下载dist文件夹中Stock Watcher.exe文件直接运行
+下载Stock Watcher.exe文件直接运行
 
 ### 方法2.源码运行
 **1.下载文件**
@@ -32,4 +32,4 @@
 - 启动应用
 
 **3.后续运行**
-双击run.py即可
+双击Stock Watcher.py即可
