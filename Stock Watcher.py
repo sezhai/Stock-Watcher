@@ -27,6 +27,49 @@ COLOR_UP = "#FF4D4F"   # 红色
 COLOR_DOWN = "#52C41A" # 绿色
 COLOR_NEUTRAL = "#cccccc"
 
+# ================= 帮助文档文本 =================
+HELP_TEXT = """【监控代码输入格式说明】
+
+在设置面板中，必须先正确选择单选按钮（"股票/外汇" 或 "数字货币"），然后按以下规则输入代码：
+
+1. 股票与指数 (选择 "股票/外汇")
+--------------------------------------------------[A股/国内指数] (经由腾讯 API)
+• 格式: 交易所小写拼音首字母 + 6位数字代码
+• 示例: sh000001 (上证指数), sh600519 (贵州茅台), sz000858 (五粮液), sz399001 (深证成指)
+
+[美股] (经由新浪 API)
+• 格式: gb_ + 小写股票代码
+• 示例: gb_aapl (苹果), gb_tsla (特斯拉), gb_qqq (纳指ETF)
+
+[港股] (经由腾讯 API)
+• 格式: hk + 数字代码
+• 示例: hk00700 (腾讯控股), hk09988 (阿里巴巴)
+
+
+2. 期货与外汇 (选择 "股票/外汇")
+--------------------------------------------------
+[国际大宗商品/外盘期货] (经由新浪 API)
+• 格式: hf_ + 品种大写代码
+• 示例: hf_GC (COMEX黄金), hf_CL (WTI原油), hf_SI (白银)
+
+[国内期货] (经由新浪 API)
+• 格式: nf_ + 品种代码
+• 示例: nf_AU0 (沪金连续), nf_RB0 (螺纹钢连续)[外汇汇率] (经由新浪 API)
+• 格式: 6位大写字母组合 (基础货币+计价货币)
+• 示例: EURUSD (欧元/美元), USDJPY (美元/日元), USDCNH (美元/离岸人民币)
+
+
+3. 数字货币 (选择 "数字货币")
+--------------------------------------------------
+代码内置了自动拼接 USDT 的逻辑，并提供 币安 -> Gate.io -> CoinGecko 的三级降级容灾。
+• 格式: 代币大写简称 (最简写法) 或 完整交易对
+• 示例: 
+  BTC 或 BTCUSDT (比特币)
+  ETH 或 ETHUSDT (以太坊)
+  SOL (Solana)
+  DOGE (狗狗币)
+"""
+
 # 默认监控列表
 DEFAULT_ITEMS =[
     {"code": "sh000001", "name": "上证指数", "type": "stock", "alert_price": 0},
@@ -374,6 +417,16 @@ def update_ui_loop():
         time.sleep(0.8)
 
 # ================= 交互菜单 =================
+def show_help_window():
+    help_win = tk.Toplevel(root)
+    help_win.title("代码格式说明")
+    help_win.geometry("500x500")
+    
+    text_widget = tk.Text(help_win, wrap="word", padx=15, pady=15, font=("Microsoft YaHei", 9))
+    text_widget.pack(fill="both", expand=True)
+    text_widget.insert(tk.END, HELP_TEXT)
+    text_widget.config(state=tk.DISABLED)
+
 def show_context_menu(e):
     m = tk.Menu(root, tearoff=0)
     m.add_command(label="设置", command=open_settings)
@@ -384,8 +437,7 @@ def show_context_menu(e):
 def open_settings():
     win = tk.Toplevel(root)
     win.title("资产及预警配置")
-    # 增加窗口宽度以容纳中文字符按钮
-    win.geometry("560x440")
+    win.geometry("560x480")
     
     frame = tk.LabelFrame(win, text="监控列表 (点击行快速编辑)", padx=10, pady=10)
     frame.pack(fill="both", expand=True, padx=10, pady=10)
@@ -397,7 +449,7 @@ def open_settings():
         lb.delete(0, tk.END)
         for i in ITEMS:
             ap = i.get('alert_price', 0.0)
-            alert_str = f" [预警:{ap}]" if ap > 0 else ""
+            alert_str = f"[预警:{ap}]" if ap > 0 else ""
             lb.insert(tk.END, f"{i['code']} | {i['name']} ({i['type']}){alert_str}")
     
     refresh_list()
@@ -417,18 +469,16 @@ def open_settings():
             with items_lock: ITEMS.pop(sel[0])
             save_config(); refresh_list(); refresh_labels({})
 
-    # 按钮由符号改为中文，宽度适度增加到 width=6
     btn_frame = tk.Frame(frame)
     btn_frame.pack(side="right", fill="y", padx=5)
     tk.Button(btn_frame, text="向上", command=lambda: move(-1), width=6).pack(pady=(0, 5))
     tk.Button(btn_frame, text="向下", command=lambda: move(1), width=6).pack(pady=5)
     tk.Button(btn_frame, text="删除", fg="red", command=delete_item, width=6).pack(pady=(15, 0))
     
-    # ================= 底部录入区重构：绝对居中排版 =================
+    # ================= 底部录入区重构 =================
     add_f = tk.Frame(win)
     add_f.pack(fill="x", padx=10, pady=(0, 10))
     
-    # 1. 使用子 Frame 将输入框同行紧凑包裹，并强制居中
     form_frame = tk.Frame(add_f)
     form_frame.pack(anchor="center", pady=5)
     
@@ -444,7 +494,6 @@ def open_settings():
     e_alert = tk.Entry(form_frame, width=11)
     e_alert.grid(row=0, column=5, padx=(2, 0), pady=5)
     
-    # 2. 单选按钮独立一行，并强制居中
     type_frame = tk.Frame(add_f)
     type_frame.pack(anchor="center", pady=2)
     
@@ -452,7 +501,6 @@ def open_settings():
     tk.Radiobutton(type_frame, text="股票/外汇", var=t_var, value="stock").pack(side="left", padx=10)
     tk.Radiobutton(type_frame, text="数字货币", var=t_var, value="crypto").pack(side="left", padx=10)
     
-    # 列表数据回填
     def on_list_select(event):
         sel = lb.curselection()
         if sel:
@@ -485,8 +533,10 @@ def open_settings():
             e_name.delete(0, tk.END)
             e_alert.delete(0, tk.END)
             
-    # 3. 添加按钮跨越底部独立成行，并绝对居中
-    tk.Button(add_f, text="添加 / 修改", command=do_add, bg="#4CAF50", fg="white", font=("Microsoft YaHei", 10, "bold"), width=20, pady=2).pack(anchor="center", pady=(10, 10))
+    tk.Button(add_f, text="添加 / 修改", command=do_add, bg="#4CAF50", fg="white", font=("Microsoft YaHei", 10, "bold"), width=20, pady=2).pack(anchor="center", pady=(10, 5))
+    
+    help_btn = tk.Button(add_f, text="代码输入格式说明", command=show_help_window, fg="#0066cc", relief="flat", cursor="hand2")
+    help_btn.pack(anchor="center", pady=(0, 5))
 
 def quit_app():
     save_window_state(); save_config()
