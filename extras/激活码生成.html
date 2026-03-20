@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>激活码生成器</title>
+    <style>
+        body { font-family: "Microsoft YaHei", sans-serif; background: #f4f4f4; padding: 50px; display: flex; justify-content: center; }
+        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 400px; }
+        h2 { text-align: center; color: #333; margin-top: 0; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #666; font-size: 14px; }
+        input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: monospace; font-size: 16px; }
+        button { width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        button:hover { background: #45a049; }
+        .result-box { margin-top: 20px; padding: 15px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 4px; text-align: center; display: none; }
+        .result-code { font-size: 22px; font-weight: bold; color: #2e7d32; font-family: monospace; letter-spacing: 2px; user-select: all; cursor: pointer; }
+        .warning { color: #d32f2f; font-size: 12px; margin-top: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>激活码生成器</h2>
+        <div class="form-group">
+            <label>请输入用户机器码 (Machine Code)：</label>
+            <input type="text" id="machineCode" placeholder="例如：A1B2C3D4">
+        </div>
+        <button onclick="generateCode()">计算激活码</button>
+        
+        <div id="resultBox" class="result-box">
+            <div style="font-size: 14px; color: #666; margin-bottom: 5px;">生成的激活码 (点击即可复制)：</div>
+            <div id="activationCode" class="result-code" onclick="copyToClipboard(this.innerText)"></div>
+        </div>
+        
+        <div class="warning">⚠️ 风险审计：此网页包含你的核心秘钥盐 (Salt)，严禁部署到任何公开网络服务器或发送给他人。仅限你自己本地双击运行。</div>
+    </div>
+
+    <script>
+        // 核心配置：必须与你 Python 源码里打包的盐完全一致
+        const SECRET_SALT = "Yang_Stock_Watcher_2026_@#!";
+
+        async function generateCode() {
+            const inputField = document.getElementById("machineCode");
+            const machineCode = inputField.value.trim().toUpperCase();
+            
+            if (!machineCode) {
+                alert("错误：机器码不能为空");
+                return;
+            }
+
+            const rawStr = machineCode + SECRET_SALT;
+            
+            // 调用浏览器底层原生 Crypto API 进行 SHA-256 哈希计算
+            const encoder = new TextEncoder();
+            const data = encoder.encode(rawStr);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            
+            // 将二进制 Buffer 转为 16 进制字符串
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            
+            // 截取前 16 位并转大写 (对齐 Python 逻辑)
+            const activationCode = hashHex.substring(0, 16).toUpperCase();
+            
+            // 渲染 UI
+            document.getElementById("activationCode").innerText = activationCode;
+            document.getElementById("resultBox").style.display = "block";
+        }
+
+        // 辅助功能：一键复制
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("已复制到剪贴板: " + text);
+            });
+        }
+    </script>
+</body>
+</html>
